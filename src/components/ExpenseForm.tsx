@@ -47,7 +47,17 @@ export default function ExpenseForm() {
             setError('Todos los campos son obligatorios')
             return
         }
+
+        //agregar nuevo gasto
         dispatch({ type: 'add-expense', payload: {expense} })
+
+        //reiniciar state formulario
+        setExpense({
+            amount: 0,
+            expenseName: '',
+            category: '',
+            date: new Date()
+        })
     }
 
   return (
@@ -70,7 +80,7 @@ export default function ExpenseForm() {
                 placeholder="Añade el nombre del gasto"
                 className="bg-slate-100 p-2"
                 name="expenseName"
-                // value={expense.expenseName}
+                value={expense.expenseName}
                 onChange={handleChange}
             />
         </div>
@@ -83,7 +93,7 @@ export default function ExpenseForm() {
                 placeholder="Añade la cantidad del gasto: ej. 300"
                 className="bg-slate-100 p-2"
                 name="amount"
-                // value={expense.amount}
+                value={expense.amount}
                 onChange={handleChange}
             />
         </div>
@@ -94,7 +104,7 @@ export default function ExpenseForm() {
                 id="category"
                 className="bg-slate-100 p-2"
                 name="category"
-                // value={expense.category}
+                value={expense.category}
                 onChange={handleChange}
             >
                 <option value="">-- Seleccione --</option>
