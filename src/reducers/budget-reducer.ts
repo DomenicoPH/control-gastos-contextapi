@@ -52,7 +52,8 @@ export const budgetReducer = (state : BudgetState = initialState, action : Budge
     if(action.type == 'close-modal'){
         return {
             ...state,
-            modal: false
+            modal: false,
+            editingId: ''
         }
     }
 
@@ -90,7 +91,8 @@ export const budgetReducer = (state : BudgetState = initialState, action : Budge
         return {
             ...state,
             expenses: state.expenses.map( expense => expense.id === action.payload.expense.id ? action.payload.expense : expense ),
-            modal: false
+            modal: false,
+            editingId: ''
         }
     }
 
