@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { ChangeEvent } from "react"
 import { categories } from "../data/categories"
 import type { DraftExpense } from "../types"
@@ -20,8 +20,14 @@ export default function ExpenseForm() {
     });
 
     const [error, setError] = useState('');
+    const { dispatch, state } = useBudget();
 
-    const { dispatch } = useBudget();
+    useEffect(() => {
+        if(state.editingId){
+            const editingExpense = state.expenses.filter( currentExpense => currentExpense.id === state.editingId )[0]
+            setExpense(editingExpense)
+        }
+    }, [state.editingId])
 
     const handleChange = (e : ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const {name, value } = e.target
@@ -48,8 +54,12 @@ export default function ExpenseForm() {
             return
         }
 
-        //agregar nuevo gasto
-        dispatch({ type: 'add-expense', payload: {expense} })
+        //agregar / actualizar gasto
+        if(state.editingId){
+            dispatch({ type: 'update-expense', payload: {expense: {id: state.editingId, ...expense} }})
+        } else {
+            dispatch({ type: 'add-expense', payload: {expense} })
+        }
 
         //reiniciar state formulario
         setExpense({
