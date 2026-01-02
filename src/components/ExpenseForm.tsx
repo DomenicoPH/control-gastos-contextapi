@@ -77,7 +77,7 @@ export default function ExpenseForm() {
     >
 
         <legend className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
-            Nuevo Gasto
+            {state.editingId ? 'Actualizar gasto' : 'Nuevo gasto'}
         </legend>
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -136,7 +136,7 @@ export default function ExpenseForm() {
         <input 
             type="submit" 
             className="bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg"
-            value={'Registrar gasto'}
+            value={state.editingId ? 'Guardar cambios' : 'Registrar gasto'}
         />
 
     </form>
